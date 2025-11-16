@@ -14,7 +14,7 @@ export default function NewClaimPage() {
   const handleSubmit = async (data: { receiver: string; claimType: any; proofHash: string }) => {
     try {
       await submit(data.receiver, data.claimType, data.proofHash);
-      router.replace({ pathname: '/explore', query: { address: data.receiver } }, undefined, { shallow: true });
+      router.replace('/claims/pending');
     } catch {
       // swallow; error is already handled by hook state
     }
