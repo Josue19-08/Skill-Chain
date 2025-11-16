@@ -177,6 +177,106 @@ export interface ResolveDisputeOptions {
 }
 
 // ========================================
+// ARKIV DATA LAYER TYPES
+// ========================================
+
+/**
+ * Arkiv configuration
+ */
+export interface ArkivConfig {
+  /** Private key for wallet client (for write operations) */
+  privateKey?: string;
+  /** RPC URL (defaults to Mendoza testnet) */
+  rpcUrl?: string;
+  /** WebSocket URL (defaults to Mendoza testnet) */
+  wsUrl?: string;
+}
+
+/**
+ * Arkiv entity attribute
+ */
+export interface ArkivAttribute {
+  key: string;
+  value: string;
+}
+
+/**
+ * Arkiv entity data
+ */
+export interface ArkivEntity {
+  entityKey: string;
+  payload?: any;
+  contentType: string;
+  attributes: ArkivAttribute[];
+  expiresAt?: number;
+  createdAt: number;
+}
+
+/**
+ * Options for creating an Arkiv entity
+ */
+export interface CreateArkivEntityOptions {
+  /** Entity payload (will be JSON stringified) */
+  payload: any;
+  /** Content type (e.g., "application/json") */
+  contentType?: string;
+  /** Key-value attributes for querying */
+  attributes?: ArkivAttribute[];
+  /** Expiration time in minutes (optional) */
+  expiresInMinutes?: number;
+}
+
+/**
+ * Options for updating an Arkiv entity
+ */
+export interface UpdateArkivEntityOptions {
+  /** Entity key to update */
+  entityKey: string;
+  /** New payload */
+  payload: any;
+  /** Updated attributes (optional) */
+  attributes?: ArkivAttribute[];
+  /** New expiration time in minutes (optional) */
+  expiresInMinutes?: number;
+}
+
+/**
+ * Query filter for Arkiv entities
+ */
+export interface ArkivQueryFilter {
+  /** Attribute key to filter by */
+  key: string;
+  /** Attribute value to match */
+  value: string;
+  /** Operator (eq, ne, neq, gt, lt, gte, lte) */
+  operator?: 'eq' | 'ne' | 'neq' | 'gt' | 'lt' | 'gte' | 'lte';
+}
+
+/**
+ * Options for querying Arkiv entities
+ */
+export interface ArkivQueryOptions {
+  /** Filters to apply */
+  filters?: ArkivQueryFilter[];
+  /** Whether to include attributes in results */
+  withAttributes?: boolean;
+  /** Whether to include payload in results */
+  withPayload?: boolean;
+  /** Limit number of results */
+  limit?: number;
+}
+
+/**
+ * Result of Arkiv entity creation
+ */
+export interface ArkivCreateResult {
+  success: boolean;
+  entityKey?: string;
+  txHash?: string;
+  error?: string;
+}
+
+// ========================================
 // KILT IDENTITY TYPES
 // ========================================
 
