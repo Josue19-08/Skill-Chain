@@ -16,13 +16,13 @@ export function Layout({ children, title = 'SkillChain', description }: LayoutPr
   return (
     <>
       <Head>
-        <title>{title} - SkillChain</title>
+      <title>{`${title} - SkillChain`}</title>
         {description && <meta name="description" content={description} />}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-        <Header />
+        <Header />S
         <main>{children}</main>
       </div>
     </>
