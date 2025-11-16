@@ -6,7 +6,39 @@
 
 This protocol is implemented as an **ink! smart contract** deployed on a WASM-compatible parachain. Validations (e.g., "completed a job", "won a hackathon", "contributed to a repo") are registered as claims that can be approved on-chain by another entity (e.g., a client, a DAO, or OFFER-HUB).
 
+### Built on Polkadot
+
+SkillChain leverages the **Polkadot ecosystem** to provide a decentralized, interoperable reputation system. By deploying on a WASM-compatible parachain, the protocol benefits from:
+
+- **Fast Finality**: Sub-second block times on optimized parachains
+- **Low Transaction Costs**: Efficient gas usage with ink! smart contracts
+- **Cross-Chain Interoperability**: Native integration with other Polkadot parachains
+- **Scalability**: Parachain architecture allows for high throughput
+- **Security**: Shared security model through Polkadot's relay chain
+
+The protocol integrates seamlessly with Polkadot's native technologies:
+- **ink! 5.0** for smart contract development
+- **Substrate** for blockchain infrastructure
+- **KILT Protocol** for decentralized identity (native Polkadot parachain)
+- **Polkadot.js** for wallet integration and user experience
+
 **OFFER-HUB**, a Web3 freelance platform, is the first official integrator of the protocol, consuming and integrating SkillChain public profiles within its app to display each freelancer's validated history.
+
+### About Offer-Hub
+
+**Offer-Hub** is a decentralized freelance platform that democratizes global financial access using the Polkadot blockchain as its infrastructure. Built on top of SkillChain, it provides:
+
+- **Universal Financial Inclusion**: Enables freelancers worldwide to receive and send payments instantly, with simple wallet creation through Polkadot.js Extension — no KYC friction or bank checks required.
+
+- **Instant Democratic Payments**: Fast transaction processing on Polkadot parachains with milestone-based escrow payments. The platform returns economic power directly to freelancers by removing intermediaries through smart contract automation.
+
+- **Transparent Dispute Resolution**: Conflict resolution via community voting and designated arbiters. Smart contracts automatically execute decisions, eliminating bias and delay compared to opaque centralized systems.
+
+The platform leverages:
+- **SkillChain Protocol** for on-chain reputation and verified achievements
+- **Escrow Multi-Release Contract** for secure milestone-based payments
+- **KILT Protocol** for decentralized identity (DIDs and Verifiable Credentials)
+- **Polkadot Ecosystem** for fast, low-cost transactions
 
 ## 🏗️ Project Structure
 
@@ -84,13 +116,27 @@ npm run dev
 
 ## 📦 Components
 
-### Smart Contract (`contracts/skillchain/`)
+### Smart Contracts
+
+#### SkillChain Registry (`contracts/skillchain/`)
 
 The `SkillChainRegistry` contract provides:
 - `register_profile(address, metadata_uri)`
 - `add_claim(issuer, receiver, claim_type, proof_hash)`
 - `approve_claim(claim_id)`
 - `get_claims(address)`
+- `link_did(did: String)` - Link KILT DID to profile
+- `get_did(account_id)` - Get linked DID from profile
+
+#### Escrow Multi-Release (`contracts/escrow/`)
+
+The `EscrowMultiRelease` contract enables secure freelance payments:
+- `create_escrow(freelancer, milestones, arbiter)` - Create milestone-based escrow
+- `fund_escrow(escrow_id)` - Lock funds in escrow
+- `release_milestone(escrow_id, milestone_id)` - Release payment for completed milestone
+- `request_cancel(escrow_id)` - Request cancellation
+- `approve_cancel(escrow_id)` - Approve mutual cancellation
+- `resolve_dispute_by_arbiter(escrow_id, decision)` - Arbiter resolves disputes
 
 ### Frontend (`app/web/`)
 
@@ -107,13 +153,29 @@ TypeScript SDK for external integrations with functions:
 - `addClaim()`
 - `approveClaim()`
 - `getClaimsByAddress()`
+- `linkDid()` - Link KILT DID to profile
+- `getDid()` - Get linked DID from profile
+
+**KILT Integration:**
+- `KiltClient` - Create Light DIDs, verify credentials
+- `createLightDid()` - Generate KILT Light DID
+- `verifyCredential()` - Verify KILT credentials
 
 ## 🛠️ Tech Stack
 
-- **Smart Contracts:** Rust, ink! v4+
+### Web3 Technologies
+- **ink!** - Smart contracts (v5.0) for WASM-compatible parachains
+- **Substrate** - Blockchain framework
+- **Polkadot** - Multi-chain network
+- **KILT Protocol** - Decentralized Identity (DIDs and Verifiable Credentials)
+- **Arkiv** - Decentralized storage protocol (planned integration)
+
+### Development Stack
+- **Smart Contracts:** Rust, ink! 5.0, cargo-contract
 - **Frontend:** Next.js 14, TypeScript, TailwindCSS
-- **Blockchain:** Polkadot, @polkadot/api
+- **SDK:** TypeScript, @polkadot/api, @polkadot/api-contract
 - **Wallets:** Polkadot.js Extension, Talisman, SubWallet
+- **Testing:** Jest, ink_e2e
 
 ## 🎯 Hackathon
 

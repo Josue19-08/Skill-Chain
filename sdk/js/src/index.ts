@@ -3,6 +3,7 @@
  * @module @skillchain/sdk
  */
 
-export { SkillChainClient } from './client';
+export { SkillChainClient, EscrowClient } from './client';
+export { KiltClient } from './kilt-client';
 export * from './types';
 

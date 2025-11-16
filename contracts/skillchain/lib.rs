@@ -20,6 +20,8 @@ mod skillchain {
         pub owner: AccountId,
         /// URI pointing to off-chain metadata (IPFS, Arweave, etc.)
         pub metadata_uri: String,
+        /// Optional KILT DID URI (e.g., "did:kilt:light:...")
+        pub did: Option<String>,
     }
 
     /// Status of a claim
@@ -68,6 +70,8 @@ mod skillchain {
         UnauthorizedApproval,
         /// Claim has already been approved
         ClaimAlreadyApproved,
+        /// Invalid DID format
+        InvalidDid,
     }
 
     /// Result type for contract operations
@@ -102,6 +106,14 @@ mod skillchain {
     pub struct ClaimApproved {
         #[ink(topic)]
         pub claim_id: u64,
+    }
+
+    /// Emitted when a DID is linked to a profile
+    #[ink(event)]
+    pub struct DidLinked {
+        #[ink(topic)]
+        pub owner: AccountId,
+        pub did: String,
     }
 
     // ========================================
@@ -166,6 +178,7 @@ mod skillchain {
             let profile = Profile {
                 owner: caller,
                 metadata_uri: metadata_uri.clone(),
+                did: None,
             };
 
             // Store profile
@@ -311,6 +324,54 @@ mod skillchain {
         #[ink(message)]
         pub fn get_total_claims(&self) -> u64 {
             self.next_claim_id
+        }
+
+        /// Link a KILT DID to the caller's profile
+        /// 
+        /// # Arguments
+        /// * `did` - KILT DID URI (e.g., "did:kilt:light:...")
+        /// 
+        /// # Errors
+        /// * `ProfileNotFound` - If the caller doesn't have a profile
+        /// * `InvalidDid` - If the DID format is invalid
+        /// 
+        /// # Events
+        /// * `DidLinked` - Emitted when DID is successfully linked
+        #[ink(message)]
+        pub fn link_did(&mut self, did: String) -> Result<()> {
+            let caller = self.env().caller();
+
+            // Check if profile exists
+            let mut profile = self.profiles.get(caller).ok_or(ContractError::ProfileNotFound)?;
+
+            // Basic DID format validation (must start with "did:kilt:")
+            if !did.starts_with("did:kilt:") {
+                return Err(ContractError::InvalidDid);
+            }
+
+            // Update profile with DID
+            profile.did = Some(did.clone());
+            self.profiles.insert(caller, &profile);
+
+            // Emit event
+            self.env().emit_event(DidLinked {
+                owner: caller,
+                did: did.clone(),
+            });
+
+            Ok(())
+        }
+
+        /// Get the DID linked to a profile
+        /// 
+        /// # Arguments
+        /// * `account_id` - Account to query
+        /// 
+        /// # Returns
+        /// * `Option<String>` - DID if linked, None otherwise
+        #[ink(message)]
+        pub fn get_did(&self, account_id: AccountId) -> Option<String> {
+            self.profiles.get(account_id).and_then(|p| p.did.clone())
         }
     }
 

@@ -1,0 +1,6 @@
+target/
+Cargo.lock
+*.contract
+*.wasm
+metadata.json
+

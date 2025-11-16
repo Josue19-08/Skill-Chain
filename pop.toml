@@ -1,5 +1,5 @@
 [workspace]
-members = ["contracts/skillchain"]
+members = ["contracts/skillchain", "contracts/escrow"]
 
 [profile.release]
 opt-level = "z"

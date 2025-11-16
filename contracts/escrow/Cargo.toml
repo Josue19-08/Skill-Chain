@@ -1,5 +1,5 @@
 [package]
-name = "skillchain"
+name = "escrow"
 version = "0.1.0"
 authors = ["SkillChain Team"]
 edition = "2021"
