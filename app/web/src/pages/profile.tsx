@@ -64,7 +64,7 @@ export default function ProfilePage() {
               if (!selectedAccount?.address) return;
               setIsRefreshingLinked(true);
               try {
-                const did = await getDidFromAccount(selectedAccount.address, { getDid: skillchain.getDid });
+                const did = await getDidFromAccount(selectedAccount.address, { linkDid: skillchain.linkDid, getDid: skillchain.getDid });
                 setLinkedDid(did);
               } finally {
                 setIsRefreshingLinked(false);
@@ -75,10 +75,10 @@ export default function ProfilePage() {
                 ? async () => {
                     setLinkError(null);
                     try {
-                      await linkDidToProfile({ linkDid: skillchain.linkDid }, selectedAccount?.address);
+                      await linkDidToProfile({ linkDid: skillchain.linkDid, getDid: skillchain.getDid }, selectedAccount?.address);
                       // refresh after link
                       if (selectedAccount?.address) {
-                        const did = await getDidFromAccount(selectedAccount.address, { getDid: skillchain.getDid });
+                        const did = await getDidFromAccount(selectedAccount.address, { linkDid: skillchain.linkDid, getDid: skillchain.getDid });
                         setLinkedDid(did);
                       }
                     } catch (e: any) {

@@ -4,7 +4,7 @@
  */
 
 import { useCallback, useMemo, useRef, useState } from 'react';
-import type { KiltHookReturn, KiltProfileState, CreateDidOptions } from '@/types/kilt-types';
+import type { KiltHookReturn, KiltProfileState, CreateDidOptions, SkillChainClient } from '@/types/kilt-types';
 
 // Import built SDK wrapper from local dist to avoid TS build issues in Next.js
 // NOTE: This relies on the repo layout; ensure the path is correct in monorepo
@@ -124,7 +124,7 @@ export function useKiltProfile(): KiltHookReturn {
   }, [connect, getClient, state.identity.did, state.isConnected]);
 
   const linkDidToProfile = useCallback(
-    async (skillchainClient: { linkDid: (did: string, signerAddress?: string) => Promise<{ success: boolean; error?: string }> }, signerAddress?: string) => {
+    async (skillchainClient: SkillChainClient, signerAddress?: string) => {
       try {
         setState(prev => ({ ...prev, actionError: null }));
         if (!state.identity.did) throw new Error('No DID to link');
@@ -141,7 +141,7 @@ export function useKiltProfile(): KiltHookReturn {
   );
 
   const getDidFromAccount = useCallback(
-    async (accountId: string, skillchainClient: { getDid: (accountId: string) => Promise<string | null> }): Promise<string | null> => {
+    async (accountId: string, skillchainClient: SkillChainClient): Promise<string | null> => {
       try {
         const did = await getClient().getDidFromAccount(accountId, skillchainClient);
         return did;

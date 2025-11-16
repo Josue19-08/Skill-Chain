@@ -51,7 +51,7 @@ export interface KiltClient {
  * Minimal SkillChainClient interface for component props
  */
 export interface SkillChainClient {
-  linkDid(did: string, signerAddress: string): Promise<TransactionResult>;
+  linkDid(did: string, signerAddress?: string): Promise<TransactionResult>;
   getDid(accountId: string): Promise<string | null>;
 }
 

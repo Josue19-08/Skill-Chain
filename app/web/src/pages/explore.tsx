@@ -6,7 +6,6 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AddressSearch } from '@/components/explore/address-search';
-import { ClaimList } from '@/components/claims/recent-claims'; // placeholder not used; keep page minimal
 import { useExploreProfileMock } from '@/hooks/use-explore-profile-mock';
 import { ProfileSummary } from '@/components/explore/profile-summary';
 

@@ -23,8 +23,8 @@ export function useTotalClaims() {
 
     try {
       // Call get_total_claims query (no account needed for this query)
-      // Use any account address or null for queries that don't need a signer
-      const caller = selectedAccount?.address || null;
+      // Use any account address or a default address for queries that don't need a signer
+      const caller = selectedAccount?.address || '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
       const result = await contract.query.getTotalClaims(
         caller,
         { value: 0, gasLimit: -1 }
