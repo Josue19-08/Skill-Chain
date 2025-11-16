@@ -8,7 +8,6 @@ import type { KiltHookReturn, KiltProfileState, CreateDidOptions } from '@/types
 
 // Import built SDK wrapper from local dist to avoid TS build issues in Next.js
 // NOTE: This relies on the repo layout; ensure the path is correct in monorepo
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { KiltClient } from '../../../../sdk/js/dist/kilt-client.js';
 

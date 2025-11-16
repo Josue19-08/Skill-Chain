@@ -39,9 +39,9 @@ export function useSkillchainProfile() {
                 // Decode module error if possible
                 let errMsg = result.dispatchError.toString();
                 try {
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                  // @ts-ignore - Polkadot API types
                   if ((result.dispatchError as any).isModule) {
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    // @ts-ignore - Polkadot API types
                     const metaError = (api as any).registry.findMetaError((result.dispatchError as any).asModule);
                     errMsg = `${metaError.section}.${metaError.name}: ${metaError.docs?.join(' ') || ''}`;
                   }
