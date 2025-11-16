@@ -8,6 +8,11 @@ global.localStorage = {
   clear: jest.fn(),
 };
 
+// Add TextEncoder and TextDecoder for Node.js environment
+const { TextEncoder, TextDecoder } = require('util');
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
 // Increase timeout for network operations
 jest.setTimeout(30000);
 
