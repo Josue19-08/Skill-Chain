@@ -89,7 +89,15 @@ jest.mock('@arkiv-network/sdk/utils', () => ({
 }));
 
 jest.mock('@arkiv-network/sdk/query', () => ({
-  eq: jest.fn((key: string, value: string) => ({ key, value, operator: 'eq' })),
+  eq: jest.fn((key: string, value: string | number) => ({ type: 'eq', key, value })),
+  neq: jest.fn((key: string, value: string | number) => ({ type: 'neq', key, value })),
+  gt: jest.fn((key: string, value: string | number) => ({ type: 'gt', key, value })),
+  gte: jest.fn((key: string, value: string | number) => ({ type: 'gte', key, value })),
+  lt: jest.fn((key: string, value: string | number) => ({ type: 'lt', key, value })),
+  lte: jest.fn((key: string, value: string | number) => ({ type: 'lte', key, value })),
+  and: jest.fn((...predicates: any[]) => ({ type: 'and', predicates })),
+  or: jest.fn((...predicates: any[]) => ({ type: 'or', predicates })),
+  not: jest.fn((predicate: any) => ({ type: 'not', predicate })),
 }));
 
 describe('ArkivClient', () => {
