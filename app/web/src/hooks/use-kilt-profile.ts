@@ -5,11 +5,7 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
 import type { KiltHookReturn, KiltProfileState, CreateDidOptions, SkillChainClient } from '@/types/kilt-types';
-
-// Import built SDK wrapper from local dist to avoid TS build issues in Next.js
-// NOTE: This relies on the repo layout; ensure the path is correct in monorepo
-// @ts-ignore
-import { KiltClient } from '../../../../sdk/js/dist/kilt-client.js';
+import { KiltClient } from '@/lib/kilt-client';
 
 const DEFAULT_KILT_NETWORK = process.env.NEXT_PUBLIC_KILT_NETWORK || 'wss://peregrine.kilt.io';
 
