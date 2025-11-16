@@ -3,7 +3,7 @@
  */
 
 import React, { useState } from 'react';
-import type { KiltClient, KiltCredential } from '@skillchain/sdk';
+import type { KiltClient, KiltCredential } from '@/types/kilt-types';
 
 interface CredentialVerifierProps {
   kiltClient: KiltClient;

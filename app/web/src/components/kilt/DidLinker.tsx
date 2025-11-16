@@ -3,7 +3,7 @@
  */
 
 import React, { useState } from 'react';
-import type { SkillChainClient, TransactionResult } from '@skillchain/sdk';
+import type { SkillChainClient, TransactionResult } from '@/types/kilt-types';
 
 interface DidLinkerProps {
   skillchainClient: SkillChainClient;
